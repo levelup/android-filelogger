@@ -73,11 +73,11 @@ public abstract class FileLogger {
 		this.file2 = new File(logFolder, LOG_NAME_ALTERNATIVE);
 		if (!logFolder.exists()) logFolder.mkdirs();
 		if (!logFolder.isDirectory()) {
-			Log.e(TAG, logFolder.getName() + " is not a folder");
+			FLog.e(TAG, logFolder.getName() + " is not a folder");
 			return;
 		}
 		if (!logFolder.canWrite()) {
-			Log.e(TAG, logFolder.getName() + " is not a writable");
+			FLog.e(TAG, logFolder.getName() + " is not a writable");
 			return;
 		}
 
@@ -305,7 +305,7 @@ public abstract class FileLogger {
 	protected void write(char lvl, String tag, String message, Throwable tr) {
 		// SDCard shouldn't be mounted.
 		if (writer == null) {
-			Log.e(TAG, "No writer");
+			FLog.e(TAG, "No writer");
 			return;
 		}
 
@@ -461,9 +461,9 @@ public abstract class FileLogger {
 			out.flush();
 			out.close();
 		} catch (FileNotFoundException e) {
-			Log.e(TAG, "FileNotFoundException: " + e.getMessage(), e);
+			FLog.e(TAG, "FileNotFoundException: " + e.getMessage(), e);
 		} catch (IOException e) {
-			Log.e(TAG, "IOException: " + e.getMessage(), e);
+			FLog.e(TAG, "IOException: " + e.getMessage(), e);
 		}
 
 	}
@@ -493,14 +493,14 @@ public abstract class FileLogger {
 
 					mCurrentLogFile.delete();
 				} catch (IOException e) {
-					Log.e(TAG, "Can't use file : "+ mCurrentLogFile, e);
+					FLog.e(TAG, "Can't use file : "+ mCurrentLogFile, e);
 				} finally {
 					try {
 						writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
 					} catch (UnsupportedEncodingException e) {
-						Log.e(TAG, "UnsupportedEncodingException: " + e.getMessage(), e);
+						FLog.e(TAG, "UnsupportedEncodingException: " + e.getMessage(), e);
 					} catch (FileNotFoundException e) {
-						Log.e(TAG, "FileNotFoundException: " + e.getMessage(), e);
+						FLog.e(TAG, "FileNotFoundException: " + e.getMessage(), e);
 					}
 				}
 

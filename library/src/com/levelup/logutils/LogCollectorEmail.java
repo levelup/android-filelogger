@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.util.Log;
 import android.widget.Toast;
 
 
@@ -62,7 +61,7 @@ public class LogCollectorEmail implements LogCollecting {
 
 	@Override
 	public void onLogCollectingError(String error) {
-		Log.e("FileLogger", error);
+		FLog.e("FileLogger", error);
 		if (mContext instanceof Activity) {
 			((Activity) mContext).runOnUiThread(new Runnable() {
 				@Override
