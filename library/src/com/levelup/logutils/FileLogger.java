@@ -33,6 +33,7 @@ public abstract class FileLogger {
 	private static final int MSG_WRITE = 0; // paired with a LogMessage
 	private static final int MSG_COLLECT = 1;
 	private static final int MSG_CLEAR = 2;
+	private static final int MSG_OPEN = 3;
 
 	private final File file1;
 	private final File file2;
@@ -53,9 +54,7 @@ public abstract class FileLogger {
 	 * Create a file for writing logs.
 	 * 
 	 * @param logFolder the folder path where the logs are stored
-	 * @param tag
-	 *            tag used for message without tag
-	 * @throws IOException
+	 * @param tag tag used for message without tag
 	 */
 	public FileLogger(File logFolder, String tag) {
 		this(logFolder);
@@ -72,23 +71,18 @@ public abstract class FileLogger {
 		this.file1 = new File(logFolder, LOG_NAME);
 		this.file2 = new File(logFolder, LOG_NAME_ALTERNATIVE);
 		if (!logFolder.exists()) logFolder.mkdirs();
+
 		if (!logFolder.isDirectory()) {
-			FLog.e(TAG, logFolder.getName() + " is not a folder");
+			Log.e(TAG, logFolder + " is not a folder");
 			return;
 		}
+
 		if (!logFolder.canWrite()) {
-			FLog.e(TAG, logFolder.getName() + " is not a writable");
+			Log.e(TAG, logFolder + " is not a writable");
 			return;
 		}
 
 		mCurrentLogFile = chooseFileToWrite();
-		try {
-			writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
-		} catch (UnsupportedEncodingException e) {
-			Log.e(TAG, "UnsupportedEncodingException: " + e.getMessage());
-		} catch (FileNotFoundException e) {
-			Log.e(TAG, "FileNotFoundException: " + e.getMessage());
-		}
 
 		// Initializing the HandlerThread
 		HandlerThread handlerThread = new HandlerThread("FileLogger", android.os.Process.THREAD_PRIORITY_BACKGROUND);
@@ -97,11 +91,23 @@ public abstract class FileLogger {
 			mSaveStoreHandler = new Handler(handlerThread.getLooper()) {
 				public void handleMessage(Message msg) {
 					switch (msg.what) {
+					case MSG_OPEN:
+						try {
+							closeWriter();
+						} catch (IOException e) {
+						}
+						openWriter();
+						break;
+
 					case MSG_WRITE:
 						try {
 							LogMessage logmsg = (LogMessage) msg.obj;
-							writer.append(logmsg.formatCsv());
-							writer.flush();
+							if (writer==null)
+								Log.e(TAG, "no writer");
+							else {
+								writer.append(logmsg.formatCsv());
+								writer.flush();
+							}
 						} catch (IOException e) {
 							Log.e(TAG, e.getClass().getSimpleName() + " : " + e.getMessage());
 						}
@@ -114,7 +120,7 @@ public abstract class FileLogger {
 							break;
 						}
 
-						// Get the phone informations
+						// Get the phone information
 						if (finalPath.getParentFile()!=null)
 							finalPath.getParentFile().mkdirs();
 						try {
@@ -155,29 +161,23 @@ public abstract class FileLogger {
 
 					case MSG_CLEAR:
 						try {
-							if (writer != null) {
-								writer.close();
-								writer = null;
-							}
-							file1.delete();
-							file2.delete();
+							closeWriter();
 						} catch (IOException e) {
 							Log.e(TAG, e.getMessage(), e);
 						} finally {
-							try {
-								mCurrentLogFile = file1;
-								writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
-							} catch (UnsupportedEncodingException e) {
-								Log.e(TAG, "UnsupportedEncodingException: " + mCurrentLogFile, e);
-							} catch (FileNotFoundException e) {
-								Log.e(TAG, "FileNotFoundException: " + mCurrentLogFile, e);
-							}
+							file1.delete();
+							file2.delete();
+
+							mCurrentLogFile = file1;
+							openWriter();
 						}
 						break;
-
+						
 					}
 				};
 			};
+			
+			mSaveStoreHandler.sendEmptyMessage(MSG_OPEN);
 		}
 	}
 
@@ -303,12 +303,6 @@ public abstract class FileLogger {
 	}
 
 	protected void write(char lvl, String tag, String message, Throwable tr) {
-		// SDCard shouldn't be mounted.
-		if (writer == null) {
-			Log.e(TAG, "No writer");
-			return;
-		}
-
 		if (tag == null) {
 			write(lvl, message);
 			return;
@@ -481,30 +475,38 @@ public abstract class FileLogger {
 			long size = mCurrentLogFile.length();
 			if (size > maxFileSize) {
 				try {
-					if (writer!=null) {
-						writer.close();
-						writer = null;
-					}
-
+					closeWriter();
+				} catch (IOException e) {
+					FLog.e(TAG, "Can't use file : "+ mCurrentLogFile, e);
+				} finally {
 					if (mCurrentLogFile==file2)
 						mCurrentLogFile = file1;
 					else
 						mCurrentLogFile = file2;
 
 					mCurrentLogFile.delete();
-				} catch (IOException e) {
-					FLog.e(TAG, "Can't use file : "+ mCurrentLogFile, e);
-				} finally {
-					try {
-						writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
-					} catch (UnsupportedEncodingException e) {
-						FLog.e(TAG, "UnsupportedEncodingException: " + e.getMessage(), e);
-					} catch (FileNotFoundException e) {
-						FLog.e(TAG, "FileNotFoundException: " + e.getMessage(), e);
-					}
-				}
 
+					openWriter();
+				}
 			}
+		}
+	}
+
+	private void openWriter() {
+		if (writer==null)
+			try {
+				writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
+			} catch (UnsupportedEncodingException e) {
+				Log.e(TAG, "can't get a writer for " +mCurrentLogFile+" : "+e.getMessage());
+			} catch (FileNotFoundException e) {
+				Log.e(TAG, "can't get a writer for " +mCurrentLogFile+" : "+e.getMessage());
+			}
+	}
+
+	private void closeWriter() throws IOException {
+		if (writer!=null) {
+			writer.close();
+			writer = null;
 		}
 	}
 
