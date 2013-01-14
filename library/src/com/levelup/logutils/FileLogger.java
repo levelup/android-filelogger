@@ -305,7 +305,7 @@ public abstract class FileLogger {
 	protected void write(char lvl, String tag, String message, Throwable tr) {
 		// SDCard shouldn't be mounted.
 		if (writer == null) {
-			FLog.e(TAG, "No writer");
+			Log.e(TAG, "No writer");
 			return;
 		}
 
