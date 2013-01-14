@@ -6,43 +6,53 @@ package com.levelup.logutils;
  */
 public class FLogger {
 
-	public void v(String tag, String message) {
+	public int v(String tag, String message) {
 		FLog.v(tag, message);
+		return 0;
 	}
 
-	public void v(String tag, String message, Throwable tr) {
+	public int v(String tag, String message, Throwable tr) {
 		FLog.v(tag, message, tr);
+		return 0;
 	}
 
-	public void d(String tag, String message) {
+	public int d(String tag, String message) {
 		FLog.d(tag, message);
+		return 0;
 	}
 
-	public void d(String tag, String message, Throwable tr) {
+	public int d(String tag, String message, Throwable tr) {
 		FLog.d(tag, message, tr);
+		return 0;
 	}
 
-	public void i(String tag, String message) {
+	public int i(String tag, String message) {
 		FLog.i(tag, message);
+		return 0;
 	}
 
-	public void i(String tag, String message, Throwable tr) {
+	public int i(String tag, String message, Throwable tr) {
 		FLog.i(tag, message, tr);
+		return 0;
 	}
 
-	public void w(String tag, String message) {
+	public int w(String tag, String message) {
 		FLog.w(tag, message);
+		return 0;
 	}
 
-	public void w(String tag, String message, Throwable tr) {
+	public int w(String tag, String message, Throwable tr) {
 		FLog.w(tag, message, tr);
+		return 0;
 	}
 
-	public void e(String tag, String message) {
+	public int e(String tag, String message) {
 		FLog.e(tag, message);
+		return 0;
 	}
 
-	public void e(String tag, String message, Throwable tr) {
+	public int e(String tag, String message, Throwable tr) {
 		FLog.e(tag, message, tr);
+		return 0;
 	}
 }
