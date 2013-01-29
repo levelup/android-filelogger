@@ -53,10 +53,13 @@ public abstract class FileLogger {
 	/**
 	 * Create a file for writing logs.
 	 * 
-	 * @param logFolder the folder path where the logs are stored
-	 * @param tag tag used for message without tag
+	 * @param logFolder
+	 *            the folder path where the logs are stored
+	 * @param tag
+	 *            tag used for message without tag
+	 * @throws IOException
 	 */
-	public FileLogger(File logFolder, String tag) {
+	public FileLogger(File logFolder, String tag) throws IOException {
 		this(logFolder);
 		this.mTag = tag;
 	}
@@ -64,22 +67,24 @@ public abstract class FileLogger {
 	/**
 	 * Create a file for writing logs.
 	 * 
-	 * @param logFolder the folder path where the logs are stored
+	 * @param logFolder
+	 *            the folder path where the logs are stored
+	 * @throws IOException
 	 */
 	@SuppressLint("HandlerLeak")
-	public FileLogger(File logFolder) {
+	public FileLogger(File logFolder) throws IOException {
 		this.file1 = new File(logFolder, LOG_NAME);
 		this.file2 = new File(logFolder, LOG_NAME_ALTERNATIVE);
 		if (!logFolder.exists()) logFolder.mkdirs();
 
 		if (!logFolder.isDirectory()) {
 			Log.e(TAG, logFolder + " is not a folder");
-			return;
+			throw new IOException("Path is not a directory");
 		}
 
 		if (!logFolder.canWrite()) {
 			Log.e(TAG, logFolder + " is not a writable");
-			return;
+			throw new IOException("Folder is not writable");
 		}
 
 		mCurrentLogFile = chooseFileToWrite();
@@ -87,6 +92,8 @@ public abstract class FileLogger {
 		// Initializing the HandlerThread
 		HandlerThread handlerThread = new HandlerThread("FileLogger", android.os.Process.THREAD_PRIORITY_BACKGROUND);
 		if (!handlerThread.isAlive()) {
+			Log.e(TAG, "here");
+			if (mSaveStoreHandler == null) throw new IOException("Handler is null");
 			handlerThread.start();
 			mSaveStoreHandler = new Handler(handlerThread.getLooper()) {
 				public void handleMessage(Message msg) {
@@ -102,7 +109,7 @@ public abstract class FileLogger {
 					case MSG_WRITE:
 						try {
 							LogMessage logmsg = (LogMessage) msg.obj;
-							if (writer==null)
+							if (writer == null)
 								Log.e(TAG, "no writer");
 							else {
 								writer.append(logmsg.formatCsv());
@@ -121,18 +128,18 @@ public abstract class FileLogger {
 						}
 
 						// Get the phone information
-						if (finalPath.getParentFile()!=null)
-							finalPath.getParentFile().mkdirs();
+						if (finalPath.getParentFile() != null) finalPath.getParentFile().mkdirs();
 						try {
 							finalPath.createNewFile();
 
 							if (!finalPath.canWrite())
-								((LogCollecting) msg.obj).onLogCollectingError("Can't write on "+finalPath);
+								((LogCollecting) msg.obj).onLogCollectingError("Can't write on " + finalPath);
 							else {
 								finalPath.delete();
 
 								try {
-									OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(finalPath, true), "UTF-8");
+									OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(finalPath, true),
+											"UTF-8");
 									out.append(LOG_HEAD);
 									out.append('\n');
 									out.flush();
@@ -144,17 +151,16 @@ public abstract class FileLogger {
 
 								// Merge the files
 								final File olderLogFile;
-								if (mCurrentLogFile==file2)
+								if (mCurrentLogFile == file2)
 									olderLogFile = file1;
 								else
 									olderLogFile = file2;
-								if (olderLogFile.exists())
-									mergeFile(olderLogFile, finalPath);
+								if (olderLogFile.exists()) mergeFile(olderLogFile, finalPath);
 								mergeFile(mCurrentLogFile, finalPath);
 								((LogCollecting) msg.obj).onLogCollected(finalPath, "text/csv");
 							}
 						} catch (IOException e) {
-							((LogCollecting) msg.obj).onLogCollectingError(e.getMessage()+" - file:"+finalPath);
+							((LogCollecting) msg.obj).onLogCollectingError(e.getMessage() + " - file:" + finalPath);
 						}
 
 						break;
@@ -172,11 +178,11 @@ public abstract class FileLogger {
 							openWriter();
 						}
 						break;
-						
+
 					}
 				};
 			};
-			
+
 			mSaveStoreHandler.sendEmptyMessage(MSG_OPEN);
 		}
 	}
@@ -190,103 +196,83 @@ public abstract class FileLogger {
 	}
 
 	private File chooseFileToWrite() {
-		if (!file1.exists() && !file2.exists())
-			return file1;
+		if (!file1.exists() && !file2.exists()) return file1;
 
-		if (file1.exists() && file1.length() < maxFileSize)
-			return file1;
+		if (file1.exists() && file1.length() < maxFileSize) return file1;
 
 		return file2;
 	}
 
 	public void d(String tag, String msg, Throwable tr) {
-		if (logLevel.allows(FLogLevel.D))
-			write('d', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.D)) write('d', tag, msg, tr);
 	}
 
 	public void d(String tag, String msg) {
-		if (logLevel.allows(FLogLevel.D))
-			write('d', tag, msg);
+		if (logLevel.allows(FLogLevel.D)) write('d', tag, msg);
 	}
 
 	public void d(String msg) {
-		if (logLevel.allows(FLogLevel.D))
-			write('d', msg);
+		if (logLevel.allows(FLogLevel.D)) write('d', msg);
 	}
 
 	public void e(String tag, String msg, Throwable tr) {
-		if (logLevel.allows(FLogLevel.E))
-			write('e', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.E)) write('e', tag, msg, tr);
 	}
 
 	public void e(String tag, String msg) {
-		if (logLevel.allows(FLogLevel.E))
-			write('e', tag, msg);
+		if (logLevel.allows(FLogLevel.E)) write('e', tag, msg);
 	}
 
 	public void e(String msg) {
-		if (logLevel.allows(FLogLevel.E))
-			write('e', msg);
+		if (logLevel.allows(FLogLevel.E)) write('e', msg);
 	}
 
 	public void wtf(String tag, String msg, Throwable tr) {
-		if (logLevel.allows(FLogLevel.WTF))
-			write('f', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.WTF)) write('f', tag, msg, tr);
 	}
 
 	public void wtf(String tag, String msg) {
-		if (logLevel.allows(FLogLevel.WTF))
-			write('f', tag, msg);
+		if (logLevel.allows(FLogLevel.WTF)) write('f', tag, msg);
 	}
 
 	public void wtf(String msg) {
-		if (logLevel.allows(FLogLevel.WTF))
-			write('f', msg);
+		if (logLevel.allows(FLogLevel.WTF)) write('f', msg);
 	}
 
 	public void i(String msg, String tag, Throwable tr) {
-		if (logLevel.allows(FLogLevel.I))
-			write('i', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.I)) write('i', tag, msg, tr);
 	}
 
 	public void i(String msg, String tag) {
-		if (logLevel.allows(FLogLevel.I))
-			write('i', tag, msg);
+		if (logLevel.allows(FLogLevel.I)) write('i', tag, msg);
 	}
 
 	public void i(String msg) {
-		if (logLevel.allows(FLogLevel.I))
-			write('i', msg);
+		if (logLevel.allows(FLogLevel.I)) write('i', msg);
 	}
 
 	public void v(String msg, String tag, Throwable tr) {
-		if (logLevel.allows(FLogLevel.V))
-			write('v', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.V)) write('v', tag, msg, tr);
 	}
 
 	public void v(String msg, String tag) {
-		if (logLevel.allows(FLogLevel.V))
-			write('v', tag, msg);
+		if (logLevel.allows(FLogLevel.V)) write('v', tag, msg);
 	}
 
 	public void v(String msg) {
-		if (logLevel.allows(FLogLevel.V))
-			write('v', msg);
+		if (logLevel.allows(FLogLevel.V)) write('v', msg);
 	}
 
 	public void w(String tag, String msg, Throwable tr) {
-		if (logLevel.allows(FLogLevel.W))
-			write('w', tag, msg, tr);
+		if (logLevel.allows(FLogLevel.W)) write('w', tag, msg, tr);
 	}
 
 	public void w(String tag, String msg) {
-		if (logLevel.allows(FLogLevel.W))
-			write('w', tag, msg);
+		if (logLevel.allows(FLogLevel.W)) write('w', tag, msg);
 	}
 
 	public void w(String msg) {
-		if (logLevel.allows(FLogLevel.W))
-			write('w', msg);
+		if (logLevel.allows(FLogLevel.W)) write('w', msg);
 	}
 
 	private void write(char lvl, String message) {
@@ -308,7 +294,8 @@ public abstract class FileLogger {
 			return;
 		}
 
-		Message htmsg = Message.obtain(mSaveStoreHandler, MSG_WRITE, new LogMessage(lvl, tag, getApplicationLocalTag(), Thread.currentThread().getName(), message, tr));
+		Message htmsg = Message.obtain(mSaveStoreHandler, MSG_WRITE, new LogMessage(lvl, tag, getApplicationLocalTag(), Thread
+				.currentThread().getName(), message, tr));
 
 		mSaveStoreHandler.sendMessage(htmsg);
 	}
@@ -340,10 +327,8 @@ public abstract class FileLogger {
 		}
 
 		private void addCsvHeader(StringBuilder csv) {
-			if (dateFormat==null)
-				dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
-			if (date==null && dateFormat!=null)
-				date = dateFormat.format(new Date(now));
+			if (dateFormat == null) dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
+			if (date == null && dateFormat != null) date = dateFormat.format(new Date(now));
 
 			csv.append(date.toString());
 			csv.append(',');
@@ -351,20 +336,16 @@ public abstract class FileLogger {
 			csv.append(',');
 			csv.append(android.os.Process.myPid());
 			csv.append(',');
-			if (appTag!=null)
-				csv.append(appTag);
+			if (appTag != null) csv.append(appTag);
 			csv.append(',');
-			if (threadName!=null)
-				csv.append(threadName);
+			if (threadName != null) csv.append(threadName);
 			csv.append(',');
-			if (tag!=null)
-				csv.append(tag);
+			if (tag != null) csv.append(tag);
 			csv.append(',');
 		}
 
 		private void addException(StringBuilder csv, Throwable tr) {
-			if (tr==null)
-				return;
+			if (tr == null) return;
 			StringBuilder sb = new StringBuilder();
 			sb.append(cause.getClass());
 			sb.append(": ");
@@ -372,7 +353,7 @@ public abstract class FileLogger {
 			sb.append('\n');
 
 			for (StackTraceElement trace : cause.getStackTrace()) {
-				//addCsvHeader(csv);
+				// addCsvHeader(csv);
 				sb.append(" at ");
 				sb.append(trace.getClassName());
 				sb.append('.');
@@ -393,11 +374,10 @@ public abstract class FileLogger {
 			StringBuilder csv = new StringBuilder();
 			addCsvHeader(csv);
 			csv.append('"');
-			if (msg!=null)
-				csv.append(msg.replace(';', '-').replace(',', '-').replace('"', '\''));
+			if (msg != null) csv.append(msg.replace(';', '-').replace(',', '-').replace('"', '\''));
 			csv.append('"');
 			csv.append('\n');
-			if (cause!=null) {
+			if (cause != null) {
 				addCsvHeader(csv);
 				csv.append('"');
 				addException(csv, cause);
@@ -429,7 +409,7 @@ public abstract class FileLogger {
 	public void collectlogs(Context context, LogCollecting listener) {
 		if (mCurrentLogFile == null) {
 			listener.onLogCollectingError("Log file is invalid.");
-		} else if (finalPath==null) {
+		} else if (finalPath == null) {
 			listener.onLogCollectingError("Final path have not been set");
 		} else {
 			Message msg = Message.obtain(mSaveStoreHandler, MSG_COLLECT, listener);
@@ -464,6 +444,7 @@ public abstract class FileLogger {
 
 	/**
 	 * a special tag to be added to the logs
+	 * 
 	 * @return
 	 */
 	public String getApplicationTag() {
@@ -477,9 +458,9 @@ public abstract class FileLogger {
 				try {
 					closeWriter();
 				} catch (IOException e) {
-					FLog.e(TAG, "Can't use file : "+ mCurrentLogFile, e);
+					FLog.e(TAG, "Can't use file : " + mCurrentLogFile, e);
 				} finally {
-					if (mCurrentLogFile==file2)
+					if (mCurrentLogFile == file2)
 						mCurrentLogFile = file1;
 					else
 						mCurrentLogFile = file2;
@@ -493,18 +474,17 @@ public abstract class FileLogger {
 	}
 
 	private void openWriter() {
-		if (writer==null)
-			try {
-				writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
-			} catch (UnsupportedEncodingException e) {
-				Log.e(TAG, "can't get a writer for " +mCurrentLogFile+" : "+e.getMessage());
-			} catch (FileNotFoundException e) {
-				Log.e(TAG, "can't get a writer for " +mCurrentLogFile+" : "+e.getMessage());
-			}
+		if (writer == null) try {
+			writer = new OutputStreamWriter(new FileOutputStream(mCurrentLogFile, true), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			Log.e(TAG, "can't get a writer for " + mCurrentLogFile + " : " + e.getMessage());
+		} catch (FileNotFoundException e) {
+			Log.e(TAG, "can't get a writer for " + mCurrentLogFile + " : " + e.getMessage());
+		}
 	}
 
 	private void closeWriter() throws IOException {
-		if (writer!=null) {
+		if (writer != null) {
 			writer.close();
 			writer = null;
 		}
