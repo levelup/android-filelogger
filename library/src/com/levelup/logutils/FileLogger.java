@@ -93,7 +93,6 @@ public abstract class FileLogger {
 		HandlerThread handlerThread = new HandlerThread("FileLogger", android.os.Process.THREAD_PRIORITY_BACKGROUND);
 		if (!handlerThread.isAlive()) {
 			Log.e(TAG, "here");
-			if (mSaveStoreHandler == null) throw new IOException("Handler is null");
 			handlerThread.start();
 			mSaveStoreHandler = new Handler(handlerThread.getLooper()) {
 				public void handleMessage(Message msg) {
@@ -182,6 +181,7 @@ public abstract class FileLogger {
 					}
 				};
 			};
+			if (mSaveStoreHandler == null) throw new IOException("Handler is null");
 
 			mSaveStoreHandler.sendEmptyMessage(MSG_OPEN);
 		}
