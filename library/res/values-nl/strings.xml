@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Fout bij verzamelen logboekgegevens</string>
+  <string name="log_empty">Geen logboekgegevens</string>
+  <string name="error_temp_collect">Naar tijdelijk bestand schrijven niet mogelijk</string>
+</resources>
