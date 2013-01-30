@@ -181,7 +181,7 @@ public abstract class FileLogger {
 					}
 				};
 			};
-			if (mSaveStoreHandler == null) throw new IOException("Handler is null");
+			if (mSaveStoreHandler == null) throw new NullPointerException("Handler is null");
 
 			mSaveStoreHandler.sendEmptyMessage(MSG_OPEN);
 		}
