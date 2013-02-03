@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">FileLogger-Sample</string>
+    <string name="log_level">Log Level</string>
+    <string name="error_creating_logger">Failed to create the FileLogger in %1$s</string>
+    
+</resources>
