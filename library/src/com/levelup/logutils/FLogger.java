@@ -1,6 +1,5 @@
 package com.levelup.logutils;
 
-import com.levelup.logutils.FLog.FLogLevel;
 
 
 /**

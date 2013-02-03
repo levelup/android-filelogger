@@ -8,20 +8,6 @@ import android.util.Log;
  */
 public class FLog {
 
-	public enum FLogLevel {
-		V(0), D(1), I(2), W(3), E(4), WTF(5);
-
-		private int level;
-
-		FLogLevel(int i) {
-			this.level = i;
-		}
-
-		public boolean allows(FLogLevel test) {
-			return test.level >= this.level;
-		}
-	};
-
 	private static FLogLevel logLevel = FLogLevel.V;
 
 	protected static FileLogger flogger;

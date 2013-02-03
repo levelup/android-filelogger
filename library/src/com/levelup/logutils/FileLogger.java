@@ -22,7 +22,6 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 
-import com.levelup.logutils.FLog.FLogLevel;
 
 public class FileLogger {
 	private static final String LOG_NAME = "log.csv";
