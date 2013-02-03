@@ -2,6 +2,10 @@ package com.levelup.logutils;
 
 import android.util.Log;
 
+/**
+ * class to send log messages in a log file in addition to the regular Android logs
+ * @see {@link FLogSDK8} for the {@link Log#wtf(String, String)} calls in API v8
+ */
 public class FLog {
 
 	public enum FLogLevel {
@@ -18,23 +22,31 @@ public class FLog {
 		}
 	};
 
-	/**
-	 * Minimum level to be written in file
-	 */
 	private static FLogLevel logLevel = FLogLevel.V;
 
 	protected static FileLogger flogger;
 
+	/**
+	 * Set the {@link FileLogger} to be used by FLog
+	 * @see also {@link #setLogLevel(FLogLevel)}
+	 * @param logger
+	 */
+	public static void setFileLogger(FileLogger logger) {
+		flogger = logger;
+	}
+
+	/**
+	 * Set the minimum level to be written the log file
+	 * <p>
+	 * default to {@link FLogLevel#V}
+	 * @param level
+	 */
 	public static void setLogLevel(FLogLevel level) {
 		logLevel = level;
 	}
 	
 	protected static boolean checkLevel(FLogLevel level) {
 		return logLevel.allows(level);
-	}
-
-	public static void setFileLogger(FileLogger logger) {
-		flogger = logger;
 	}
 
 	public static void v(String tag, String message) {
