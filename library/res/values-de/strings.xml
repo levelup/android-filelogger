@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Fehler beim Erstellen der Logs</string>
+  <string name="log_empty">Kein Log</string>
+  <string name="error_temp_collect">Temporäre Datei kann nicht geschrieben werden</string>
+</resources>

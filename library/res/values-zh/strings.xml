@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">收集日志时发生错误</string>
+  <string name="log_empty">没有日志</string>
+  <string name="error_temp_collect">无法写入临时文件</string>
+</resources>
