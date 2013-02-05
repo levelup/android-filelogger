@@ -30,6 +30,6 @@ public enum FLogLevel {
 	WTF;
 
 	public boolean allows(FLogLevel test) {
-		return this.compareTo(test) >= 0;
+		return this.compareTo(test) <= 0;
 	}
 }
