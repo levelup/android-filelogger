@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Ошибка получения логов</string>
+  <string name="log_empty">Нет лога</string>
+  <string name="error_temp_collect">Ошибка записи во временный файл</string>
+</resources>

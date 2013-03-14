@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="error_collecting_logs">Coleta de logs de erro</string>
-  <string name="log_empty">Sem registo no log</string>
+  <string name="log_empty">Sem registro no log</string>
   <string name="error_temp_collect">Não escrever em arquivo temporário</string>
 </resources>
