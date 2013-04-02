@@ -344,7 +344,7 @@ public class FileLogger {
 			}
 		}
 
-		private void addCsvHeader(StringBuilder csv) {
+		private void addCsvHeader(final StringBuilder csv) {
 			if (dateFormat==null)
 				dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
 			if (date==null && dateFormat!=null)
@@ -367,10 +367,10 @@ public class FileLogger {
 			csv.append(',');
 		}
 
-		private void addException(StringBuilder csv, Throwable tr) {
+		private void addException(final StringBuilder csv, Throwable tr) {
 			if (tr==null)
 				return;
-			StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder();
 			sb.append(cause.getClass());
 			sb.append(": ");
 			sb.append(cause.getMessage());
@@ -395,7 +395,7 @@ public class FileLogger {
 		}
 
 		public CharSequence formatCsv() {
-			StringBuilder csv = new StringBuilder();
+			final StringBuilder csv = new StringBuilder();
 			addCsvHeader(csv);
 			csv.append('"');
 			if (msg != null) csv.append(msg.replace(';', '-').replace(',', '-').replace('"', '\''));
