@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="log_empty">لا يوجد سجل</string>
+  <string name="error_temp_collect">لا يمكن الكتابة في ملف مؤقت</string>
+</resources>

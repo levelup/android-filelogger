@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">S\'ha produït un error en obtenir els registres</string>
+  <string name="log_empty">No hi ha cap registre</string>
+  <string name="error_temp_collect">No es pot escriure al fitxer temporal</string>
+</resources>
