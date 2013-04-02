@@ -21,53 +21,63 @@ public class FLoggerTagged {
 		this.tag = tag;
 	}
 
-	public void v(String message) {
+	public int v(String message) {
 		assertLogger(FLogLevel.V);
 		FLog.v(tag, message);
+		return 0;
 	}
 
-	public void v(String message, Throwable tr) {
+	public int v(String message, Throwable tr) {
 		assertLogger(FLogLevel.V);
 		FLog.v(tag, message, tr);
+		return 0;
 	}
 
-	public void d(String message) {
+	public int d(String message) {
 		assertLogger(FLogLevel.D);
 		FLog.d(tag, message);
+		return 0;
 	}
 
-	public void d(String message, Throwable tr) {
+	public int d(String message, Throwable tr) {
 		assertLogger(FLogLevel.D);
 		FLog.d(tag, message, tr);
+		return 0;
 	}
 
-	public void i(String message) {
+	public int i(String message) {
 		assertLogger(FLogLevel.I);
 		FLog.i(tag, message);
+		return 0;
 	}
 
-	public void i(String message, Throwable tr) {
+	public int i(String message, Throwable tr) {
 		assertLogger(FLogLevel.I);
 		FLog.i(tag, message, tr);
+		return 0;
 	}
 
-	public void w(String message) {
+	public int w(String message) {
 		assertLogger(FLogLevel.W);
 		FLog.w(tag, message);
+		return 0;
 	}
 
-	public void w(String message, Throwable tr) {
+	public int w(String message, Throwable tr) {
 		assertLogger(FLogLevel.W);
 		FLog.w(tag, message, tr);
+		return 0;
 	}
 
-	public void e(String message) {
+	public int e(String message) {
 		assertLogger(FLogLevel.E);
 		FLog.e(tag, message);
+		return 0;
 	}
 
-	public void e(String message, Throwable tr) {
+	public int e(String message, Throwable tr) {
 		assertLogger(FLogLevel.E);
 		FLog.e(tag, message, tr);
+		return 0;
 	}
 }
