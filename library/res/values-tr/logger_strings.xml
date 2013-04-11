@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Loglar biriktirilirken hata oluştu</string>
+  <string name="log_empty">Log Yok</string>
+  <string name="error_temp_collect">Tampon dosyaya yazılamıyor</string>
+</resources>
