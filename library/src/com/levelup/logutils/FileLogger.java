@@ -375,7 +375,7 @@ public class FileLogger {
 		private void addException(final StringBuilder csv, Throwable tr) {
 			if (tr==null)
 				return;
-			final StringBuilder sb = new StringBuilder();
+			final StringBuilder sb = new StringBuilder(256);
 			sb.append(cause.getClass());
 			sb.append(": ");
 			sb.append(cause.getMessage());
@@ -400,7 +400,7 @@ public class FileLogger {
 		}
 
 		public CharSequence formatCsv() {
-			final StringBuilder csv = new StringBuilder();
+			final StringBuilder csv = new StringBuilder(256);
 			addCsvHeader(csv);
 			csv.append('"');
 			if (msg != null) csv.append(msg.replace(';', '-').replace(',', '-').replace('"', '\''));
