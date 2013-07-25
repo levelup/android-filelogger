@@ -320,6 +320,7 @@ public class FileLogger {
 
 	private static class LogMessage {
 		private static SimpleDateFormat dateFormat; // must always be used in the same thread
+		private static Date mDate;
 
 		private final long now;
 		private final char level;
@@ -347,8 +348,12 @@ public class FileLogger {
 		private void addCsvHeader(final StringBuilder csv) {
 			if (dateFormat==null)
 				dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
-			if (date==null && dateFormat!=null)
-				date = dateFormat.format(new Date(now));
+			if (date==null && null!=dateFormat) {
+				if (null==mDate)
+					mDate = new Date();
+				mDate.setTime(now);
+				date = dateFormat.format(mDate);
+			}
 
 			csv.append(date.toString());
 			csv.append(',');
