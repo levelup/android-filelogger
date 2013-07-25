@@ -3,5 +3,6 @@
     <string name="error_collecting_logs">Error collecting logs</string>
     <string name="log_empty">No Log</string>
     <string name="error_temp_collect">Can\'t write in temporary file</string>
+    <string name="error_no_email">Can\'t send the email</string>
     
 </resources>

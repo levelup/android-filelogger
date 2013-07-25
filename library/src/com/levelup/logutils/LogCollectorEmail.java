@@ -5,6 +5,8 @@ import java.io.File;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.widget.Toast;
 
@@ -50,12 +52,22 @@ public class LogCollectorEmail implements LogCollecting {
 		if (mText != null) emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, mText);
 		emailIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 
-		Intent intent = Intent.createChooser(emailIntent, mDialogTitle != null ? mDialogTitle : mTitle);
-		if (mContext instanceof Activity)
-			((Activity) mContext).startActivityForResult(intent, RESULT_SHARE);
-		else {
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			mContext.startActivity(intent);
+		ResolveInfo handler = mContext.getPackageManager().resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY);
+		if (null == handler) {
+			((Activity) mContext).runOnUiThread(new Runnable() {
+				@Override
+				public void run() {
+					Toast.makeText(mContext, R.string.error_no_email, Toast.LENGTH_LONG).show();
+				}
+			});
+		} else {
+			Intent intent = Intent.createChooser(emailIntent, mDialogTitle != null ? mDialogTitle : mTitle);
+			if (mContext instanceof Activity)
+				((Activity) mContext).startActivityForResult(intent, RESULT_SHARE);
+			else {
+				intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				mContext.startActivity(intent);
+			}
 		}
 	}
 
