@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Virhe kerättäessä lokeja</string>
+  <string name="log_empty">Ei lokia</string>
+  <string name="error_temp_collect">Tilapäistiedostoon ei voida kirjoittaa</string>
+</resources>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">שגיאה באיסוף הרישומים</string>
+  <string name="log_empty">אין רישום</string>
+  <string name="error_temp_collect">לא ניתן לכתוב לקובץ זמני</string>
+</resources>
