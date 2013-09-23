@@ -73,4 +73,16 @@ public class FLogger {
 		FLog.e(tag, message, tr);
 		return 0;
 	}
+
+	public int wtf(String tag, String message) {
+		assertLogger(FLogLevel.WTF);
+		FLog.wtf(tag, message);
+		return 0;
+	}
+
+	public int wtf(String tag, String message, Throwable tr) {
+		assertLogger(FLogLevel.WTF);
+		FLog.wtf(tag, message, tr);
+		return 0;
+	}
 }

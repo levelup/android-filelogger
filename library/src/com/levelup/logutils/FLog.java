@@ -145,6 +145,28 @@ public class FLog {
 		}
 	}
 
+	public static void wtf(String tag, String message) {
+		if (checkLevel(FLogLevel.WTF)) {
+			if (isDebugEnable()) {
+				Log.wtf(tag, message);
+			}
+			if (flogger!=null) {
+				flogger.wtf(tag, message);
+			}
+		}
+	}
+
+	public static void wtf(String tag, String message, Throwable tr) {
+		if (checkLevel(FLogLevel.WTF)) {
+			if (isDebugEnable()) {
+				Log.wtf(tag, message, tr);
+			}
+			if (flogger!=null) {
+				flogger.wtf(tag, message, tr);
+			}
+		}
+	}
+
 	/**
 	 * Will the FileLogger write or display logs.
 	 * 
