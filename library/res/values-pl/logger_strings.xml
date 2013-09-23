@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">Błąd tworzenia logów</string>
   <string name="log_empty">Brak logu</string>
   <string name="error_temp_collect">Nie można zapisać w pliku tymczasowym</string>
+  <string name="error_no_email">Nie można wysłać wiadomości e-mail</string>
 </resources>

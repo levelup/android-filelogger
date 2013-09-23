@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Възникна грешка при събирането на логовете</string>
+  <string name="log_empty">Няма лог</string>
+  <string name="error_temp_collect">Писането във временния файл е невъзможно</string>
+  <string name="error_no_email">Не може да се изпрати имейла</string>
+</resources>

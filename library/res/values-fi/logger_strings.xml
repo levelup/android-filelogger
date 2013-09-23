@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">Virhe kerättäessä lokeja</string>
   <string name="log_empty">Ei lokia</string>
   <string name="error_temp_collect">Tilapäistiedostoon ei voida kirjoittaa</string>
+  <string name="error_no_email">Sähköpostia ei voida lähettää</string>
 </resources>

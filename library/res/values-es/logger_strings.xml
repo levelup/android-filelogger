@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">Error al recoger registros</string>
   <string name="log_empty">No hay registros</string>
   <string name="error_temp_collect">No se ha podido escribir en el archivo temporal</string>
+  <string name="error_no_email">No se puede enviar el email</string>
 </resources>

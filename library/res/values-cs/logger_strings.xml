@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Chyba ukládání protokolů</string>
+  <string name="log_empty">Žádný protokol</string>
+  <string name="error_temp_collect">Nelze zapsat do dočasného souboru</string>
+  <string name="error_no_email">Nelze odeslat e-mail</string>
+</resources>
