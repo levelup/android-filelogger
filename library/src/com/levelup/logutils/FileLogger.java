@@ -112,6 +112,8 @@ public class FileLogger {
 								writer.append(logmsg.formatCsv());
 								writer.flush();
 							}
+						} catch (OutOfMemoryError e) {
+							Log.e(TAG, e.getClass().getSimpleName() + " : " + e.getMessage());
 						} catch (IOException e) {
 							Log.e(TAG, e.getClass().getSimpleName() + " : " + e.getMessage());
 						}
@@ -413,7 +415,7 @@ public class FileLogger {
 				csv.append('"');
 				csv.append('\n');
 			}
-			return csv.toString();
+			return csv;
 		}
 	}
 
