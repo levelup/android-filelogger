@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">S\'ha produït un error en obtenir els registres</string>
   <string name="log_empty">No hi ha cap registre</string>
   <string name="error_temp_collect">No es pot escriure al fitxer temporal</string>
+  <string name="error_no_email">No s\'ha pogut enviar el correu electrònic</string>
 </resources>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">ผิดพลาดในการเก็บรวบรวมบันทึก</string>
+  <string name="log_empty">ไม่พบบันทึก</string>
+  <string name="error_temp_collect">ไม่สามารถเขียนในไฟล์ชั่วคราว</string>
+  <string name="error_no_email">ไม่สามารถส่งอีเมล</string>
+</resources>

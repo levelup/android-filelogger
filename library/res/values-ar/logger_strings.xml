@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="error_collecting_logs">جمع سجلات الخطأ</string>
   <string name="log_empty">لا يوجد سجل</string>
   <string name="error_temp_collect">لا يمكن الكتابة في ملف مؤقت</string>
+  <string name="error_no_email">لا يمكن إرسال البريد الإلكتروني</string>
 </resources>
