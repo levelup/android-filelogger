@@ -378,12 +378,12 @@ public class FileLogger {
 			if (tr==null)
 				return;
 			final StringBuilder sb = new StringBuilder(256);
-			sb.append(cause.getClass());
+			sb.append(tr.getClass());
 			sb.append(": ");
-			sb.append(cause.getMessage());
+			sb.append(tr.getMessage());
 			sb.append('\n');
 
-			for (StackTraceElement trace : cause.getStackTrace()) {
+			for (StackTraceElement trace : tr.getStackTrace()) {
 				//addCsvHeader(csv);
 				sb.append(" at ");
 				sb.append(trace.getClassName());
