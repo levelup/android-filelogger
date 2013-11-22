@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Помилка збору журналів</string>
+  <string name="log_empty">Немає журналу</string>
+  <string name="error_temp_collect">Не вдалося записати в тимчасовому файлі</string>
+  <string name="error_no_email">Не вдається надіслати листа</string>
+</resources>
