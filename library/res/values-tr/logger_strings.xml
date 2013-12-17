@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">Loglar biriktirilirken hata oluştu</string>
   <string name="log_empty">Log Yok</string>
   <string name="error_temp_collect">Tampon dosyaya yazılamıyor</string>
+  <string name="error_no_email">email gönderemezsiniz</string>
 </resources>
