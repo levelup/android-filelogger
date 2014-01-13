@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">Ошибка получения логов</string>
   <string name="log_empty">Нет лога</string>
   <string name="error_temp_collect">Ошибка записи во временный файл</string>
+  <string name="error_no_email">Не удается отправить письмо</string>
 </resources>
