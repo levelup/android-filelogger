@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">ログ収集エラー</string>
   <string name="log_empty">ログなし</string>
   <string name="error_temp_collect">一時ファイルに書き込むことが出来ません。</string>
+  <string name="error_no_email">電子メールを送信できません</string>
 </resources>
