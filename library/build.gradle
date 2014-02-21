@@ -2,6 +2,10 @@ apply plugin: 'android-library'
 
 archivesBaseName = 'Android-FileLogger'
 
+dependencies {
+    compile fileTree(dir: 'libs', include: '*.jar')
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.0.1"
