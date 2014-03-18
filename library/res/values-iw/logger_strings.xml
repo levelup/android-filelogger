@@ -3,4 +3,5 @@
   <string name="error_collecting_logs">שגיאה באיסוף הרישומים</string>
   <string name="log_empty">אין רישום</string>
   <string name="error_temp_collect">לא ניתן לכתוב לקובץ זמני</string>
+  <string name="error_no_email">לא ניתן לשלוח אימייל</string>
 </resources>
