@@ -1,5 +1,7 @@
 package com.levelup.logutils;
 
+import android.util.Log;
+
 /**
  * the different levels of logging possible in {@link FLog}
  */
@@ -7,29 +9,34 @@ public enum FLogLevel {
 	/**
 	 * Verbose log level
 	 */
-	V,
+	V(Log.VERBOSE),
 	/**
 	 * Debug log level
 	 */
-	D,
+	D(Log.DEBUG),
 	/**
 	 * Information log level
 	 */
-	I,
+	I(Log.INFO),
 	/**
 	 * Warning log level
 	 */
-	W,
+	W(Log.WARN),
 	/**
 	 * Error log level
 	 */
-	E,
+	E(Log.ERROR),
 	/**
 	 * Assert log level
 	 */
-	WTF;
+	WTF(Log.ASSERT);
+	
+	final int logLevel;
+	private FLogLevel(int logLevel) {
+		this.logLevel = logLevel;
+	}
 
-	public boolean allows(FLogLevel test) {
-		return this.compareTo(test) <= 0;
+	boolean allows(FLogLevel test) {
+		return test.logLevel >= logLevel;
 	}
 }
