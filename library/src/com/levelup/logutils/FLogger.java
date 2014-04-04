@@ -85,4 +85,12 @@ public class FLogger {
 		FLog.wtf(tag, message, tr);
 		return 0;
 	}
+	
+	/**
+	 * When enabled send the log in the file and in the Android logs
+	 * @param enable
+	 */
+	public static void enableAndroidLogging(boolean enable) {
+		FLog.enableAndroidLogging(enable);
+	}
 }

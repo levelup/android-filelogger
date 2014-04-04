@@ -11,6 +11,7 @@ public class FLog {
 	private static FLogLevel logLevel = FLogLevel.V;
 
 	protected static FileLogger flogger;
+	private static boolean hasAndroidLogs = true;
 
 	/**
 	 * Set the {@link FileLogger} to be used by FLog
@@ -173,6 +174,14 @@ public class FLog {
 	 * @return
 	 */
 	public static boolean isDebugEnable() {
-		return flogger!=null || BuildConfig.DEBUG;
+		return hasAndroidLogs && (flogger!=null || BuildConfig.DEBUG);
+	}
+
+	/**
+	 * When enabled send the log in the file and in the Android logs
+	 * @param enable
+	 */
+	public static void enableAndroidLogging(boolean enable) {
+		hasAndroidLogs = enable;
 	}
 }
