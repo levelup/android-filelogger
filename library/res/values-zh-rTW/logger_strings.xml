@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">收集日誌時發生錯誤</string>
+  <string name="log_empty">沒有日誌</string>
+  <string name="error_temp_collect">無法寫入暫存檔案</string>
+  <string name="error_no_email">無法發送電郵</string>
+</resources>
