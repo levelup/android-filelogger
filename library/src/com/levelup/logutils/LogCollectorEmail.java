@@ -20,7 +20,7 @@ public class LogCollectorEmail implements LogCollecting {
 	private final String mDialogTitle;
 	private final String mText;
 
-	private Context mContext;
+	private final Context mContext;
 
 	public LogCollectorEmail(Context context, String[] recipients, String emailTitle, String dialogTitle, String text) {
 		mRecipients = recipients;
