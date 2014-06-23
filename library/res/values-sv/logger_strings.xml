@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Fel vid insamling av loggar</string>
+  <string name="log_empty">Ingen logg</string>
+  <string name="error_temp_collect">Kan inte skriva till temporär fil</string>
+  <string name="error_no_email">Kan inte skicka e-post-meddelandet</string>
+</resources>
