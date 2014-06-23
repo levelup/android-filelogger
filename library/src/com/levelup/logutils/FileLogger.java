@@ -180,7 +180,7 @@ public class FileLogger {
 						break;
 						
 					}
-				};
+				}
 			};
 			if (mSaveStoreHandler == null) throw new NullPointerException("Handler is null");
 
