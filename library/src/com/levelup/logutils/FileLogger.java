@@ -182,8 +182,6 @@ public class FileLogger {
 					}
 				}
 			};
-			if (mSaveStoreHandler == null) throw new NullPointerException("Handler is null");
-
 			mSaveStoreHandler.sendEmptyMessage(MSG_OPEN);
 		}
 	}
@@ -350,7 +348,7 @@ public class FileLogger {
 		private void addCsvHeader(final StringBuilder csv) {
 			if (dateFormat==null)
 				dateFormat = new SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.getDefault());
-			if (date==null && null!=dateFormat) {
+			if (date==null) {
 				if (null==mDate)
 					mDate = new Date();
 				mDate.setTime(now);
