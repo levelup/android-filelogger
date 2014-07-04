@@ -1,10 +1,8 @@
 apply plugin: 'android-library'
-
 archivesBaseName = 'Android-FileLogger'
-
 android {
     compileSdkVersion 19
-    buildToolsVersion '19.1'
+    buildToolsVersion '20.0.0'
 
     defaultConfig {
         minSdkVersion 7
@@ -28,4 +26,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-project.txt'), 'proguard-rules.txt'
         }
     }
+}
+
+dependencies {
 }
