@@ -1,4 +1,4 @@
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 archivesBaseName = 'Android-FileLogger'
 android {
     compileSdkVersion 19
