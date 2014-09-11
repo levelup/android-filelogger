@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="error_collecting_logs">Hiba a naplófájlok összegyűjtése közben</string>
+  <string name="log_empty">Nincs naplófájl</string>
+  <string name="error_temp_collect">Nem sikerül ideiglenes fájlba írni</string>
+  <string name="error_no_email">Nem sikerül elküldeni a levelet</string>
+</resources>
