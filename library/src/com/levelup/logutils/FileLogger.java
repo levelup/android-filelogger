@@ -98,7 +98,7 @@ public class FileLogger {
 					case MSG_OPEN:
 						try {
 							closeWriter();
-						} catch (IOException e) {
+						} catch (IOException ignored) {
 						}
 						openWriter();
 						break;
@@ -355,7 +355,7 @@ public class FileLogger {
 				date = dateFormat.format(mDate);
 			}
 
-			csv.append(date.toString());
+			csv.append(date);
 			csv.append(',');
 			csv.append(level);
 			csv.append(',');
