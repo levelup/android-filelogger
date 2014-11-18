@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 archivesBaseName = 'Android-FileLogger'
 android {
-    compileSdkVersion 21
-    buildToolsVersion '21.0.2'
+    compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
+    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
 
     defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 21
+        minSdkVersion Math.max(7, Integer.parseInt(ANDROID_BUILD_MIN_SDK_VERSION))
+        targetSdkVersion Integer.parseInt(project.ANDROID_BUILD_TARGET_SDK_VERSION)
     }
 
     sourceSets {
