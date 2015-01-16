@@ -1,4 +1,4 @@
-package com.levelup.logutils;
+package com.levelupstudio.logutils;
 
 /**
  * A logger with a hard coded tag that send logs to the supplied FLogger 

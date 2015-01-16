@@ -1,4 +1,4 @@
-package com.levelup.logutils;
+package com.levelupstudio.logutils;
 
 import java.io.BufferedReader;
 import java.io.File;

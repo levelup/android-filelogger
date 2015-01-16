@@ -1,4 +1,4 @@
-package com.levelup.logutils;
+package com.levelupstudio.logutils;
 
 import android.util.Log;
 
