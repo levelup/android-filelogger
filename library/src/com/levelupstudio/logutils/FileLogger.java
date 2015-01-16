@@ -22,7 +22,12 @@ import android.os.HandlerThread;
 import android.os.Message;
 import android.util.Log;
 
-
+/**
+ * Main class to write Android logs into a rotating file.
+ * <p>You can collect all the logs by calling {@link #collectlogs(LogCollecting)} if you need to send them.</p>
+ *
+ * @see com.levelupstudio.logutils.LogCollectorEmail
+ */
 public class FileLogger {
 	private static final String LOG_NAME = "log.csv";
 	private static final String LOG_NAME_ALTERNATIVE = "log_a.csv";
@@ -431,11 +436,23 @@ public class FileLogger {
 
 	/**
 	 * Collects the logs. Make sure finalPath have been set before.
-	 * 
-	 * @param context
+	 *
+	 * @param context not used
 	 * @param listener
+	 * @see #collectlogs(LogCollecting)
 	 */
+	@Deprecated
 	public void collectlogs(Context context, LogCollecting listener) {
+		collectlogs(listener);
+	}
+
+	/**
+	 * Collects the logs. Make sure finalPath have been set before.
+	 *
+	 * @param listener
+	 * @see #setFinalPath(java.io.File)
+	 */
+	public void collectlogs(LogCollecting listener) {
 		if (mCurrentLogFile == null) {
 			listener.onLogCollectingError("Log file is invalid.");
 		} else if (finalPath==null) {

@@ -10,7 +10,10 @@ import android.content.pm.ResolveInfo;
 import android.net.Uri;
 import android.widget.Toast;
 
-
+/**
+ * Received for the collected logs.
+ * @see #sendMail(FileLogger, java.io.File)
+ */
 public class LogCollectorEmail implements LogCollecting {
 
 	public static final int RESULT_SHARE = 0x3155;
@@ -22,7 +25,17 @@ public class LogCollectorEmail implements LogCollecting {
 
 	private final Context mContext;
 
+	/**
+	 * Constructor for the e-mail collector. Use {@link #sendMail(FileLogger, java.io.File)} to send the logs from a file logger.
+	 *
+	 * @param context
+	 * @param recipients  list of email addresses to send the emails to, may be {@code null}
+	 * @param emailTitle  title of the email, may be {@code null}
+	 * @param dialogTitle title of the dialog shown to the user, may be {@code null}
+	 * @param text        body text of the email, may be {@code null}
+	 */
 	public LogCollectorEmail(Context context, String[] recipients, String emailTitle, String dialogTitle, String text) {
+		if (context == null) throw new NullPointerException("null context");
 		mRecipients = recipients;
 		mTitle = emailTitle;
 		mDialogTitle = dialogTitle;
@@ -31,14 +44,15 @@ public class LogCollectorEmail implements LogCollecting {
 	}
 
 	/**
-	 * send the content of the FileLogger via email using {@link tempLogFile} as a temporary storage file
-	 * @param logger the logger containing the data to send
+	 * Send the content of the FileLogger via email using {@link tempLogFile} as a temporary storage file.
+	 *
+	 * @param logger      the logger containing the data to send
 	 * @param tempLogFile the temporary file used to store the content of the email (call {@link File#deleteOnExit()} when done).
-	 *  The file needs to be readable by another process 
+	 *                    The file needs to be readable by another process
 	 */
 	public void sendMail(FileLogger logger, File tempLogFile) {
 		logger.setFinalPath(tempLogFile);
-		logger.collectlogs(mContext, this);
+		logger.collectlogs(this);
 	}
 
 	@Override
@@ -54,12 +68,16 @@ public class LogCollectorEmail implements LogCollecting {
 
 		ResolveInfo handler = mContext.getPackageManager().resolveActivity(emailIntent, PackageManager.MATCH_DEFAULT_ONLY);
 		if (null == handler) {
-			((Activity) mContext).runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					Toast.makeText(mContext, R.string.error_no_email, Toast.LENGTH_LONG).show();
-				}
-			});
+			if (mContext instanceof Activity) {
+				((Activity) mContext).runOnUiThread(new Runnable() {
+					@Override
+					public void run() {
+						Toast.makeText(mContext, R.string.error_no_email, Toast.LENGTH_LONG).show();
+					}
+				});
+			} else {
+				Toast.makeText(mContext, R.string.error_no_email, Toast.LENGTH_LONG).show();
+			}
 		} else {
 			Intent intent = Intent.createChooser(emailIntent, mDialogTitle != null ? mDialogTitle : mTitle);
 			if (mContext instanceof Activity)
