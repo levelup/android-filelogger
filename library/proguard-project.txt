@@ -19,5 +19,5 @@
 #   public *;
 #}
 
--keepnames class com.levelup.logutils.** { *; }
--keepnames interface com.levelup.logutils.** { *; }
+-keepnames class com.levelupstudio.logutils.** { *; }
+-keepnames interface com.levelupstudio.logutils.** { *; }

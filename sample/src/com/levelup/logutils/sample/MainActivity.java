@@ -1,9 +1,9 @@
-package com.levelup.logutils.sample;
+package com.levelupstudio.logutils.sample;
 
 import java.io.IOException;
 
-import com.levelup.logutils.FLog;
-import com.levelup.logutils.FileLogger;
+import com.levelupstudio.logutils.FLog;
+import com.levelupstudio.logutils.FileLogger;
 
 import android.app.Activity;
 import android.os.Bundle;

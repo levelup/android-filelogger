@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-archivesBaseName = 'Android-FileLogger'
 android {
     compileSdkVersion Integer.parseInt(project.ANDROID_BUILD_SDK_VERSION)
     buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
@@ -30,3 +29,6 @@ android {
 
 dependencies {
 }
+
+
+apply from: 'https://raw.githubusercontent.com/mcxiaoke/gradle-mvn-push/master/gradle-mvn-push.gradle'
