@@ -536,7 +536,7 @@ public class FileLogger {
 		}
 	}
 
-	void setFinalPath(File finalPath) {
+	public void setFinalPath(File finalPath) {
 		this.finalPath = finalPath;
 	}
 }
